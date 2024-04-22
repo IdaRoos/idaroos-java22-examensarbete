@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link href="/dist/styles.css" rel="stylesheet">
+
+    <script>
+        function changeSort(sortBy) {
+            let query = new URLSearchParams(window.location.search);
+            query.set('sortBy', sortBy);
+            window.location.search = query.toString();
+        }
+    </script>
+
+
+</head>
+<body class="bg-green-100">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-center text-green-800 py-6">Search Results</h1>
+    <select name="sortBy" id="sortBy" class="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onchange="changeSort(this.value)">
+        <option value="relevancy" th:selected="${sortBy == 'relevancy'}">Relevancy</option>
+        <option value="popularity" th:selected="${sortBy == 'popularity'}">Popularity</option>
+        <option value="publishedAt" th:selected="${sortBy == 'publishedAt'}">Published Date</option>
+    </select>
+
+    <div th:if="${articles.isEmpty()}" class="text-center text-lg text-red-600">
+        No articles found. Try another search.
+    </div>
+    <ul th:unless="${articles.isEmpty()}" class="space-y-4 mt-4">
+        <li th:each="article : ${articles}" class="bg-white shadow-md overflow-hidden rounded-lg p-4 hover:shadow-lg transition-shadow">
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <img th:if="${article.imageUrl}" th:src="${article.imageUrl}" alt="Article Image" class="w-32 h-32 flex-none bg-cover bg-center rounded-md object-contain" />
+                <div class="flex-auto">
+                    <h2 class="font-bold text-lg text-green-700" th:text="${article.title}">Article Title</h2>
+                    <p class="text-gray-700" th:text="${article.description}">Article Description</p>
+                    <p class="text-gray-500">Published At: <span th:text="${article.publishedAt}">Publish Date</span></p>
+                    <p class="text-gray-500">Source: <span th:text="${article.sourceName}">Source Name</span></p>
+                    <a th:href="${article.articleUrl}" target="_blank" class="mt-2 inline-block bg-green-700 hover:bg-green-900 text-white py-2 px-4 rounded transition-colors">Read more</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div th:if="${!articles.isEmpty()}" class="pagination flex justify-between items-center my-8">
+        <a th:if="${currentPage > 1}" th:href="@{/theglobalnewsarchive/search(query=${query}, language=${language}, startDateTime=${startDateTime}, endDateTime=${endDateTime}, page=${currentPage - 1})}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors">Previous</a>
+        <div>
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{/theglobalnewsarchive/search(query=${query}, language=${language}, startDateTime=${startDateTime}, endDateTime=${endDateTime}, page=${i})}" th:text="${i}" class="bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded inline-flex items-center transition-colors">1</a>
+            </span>
+        </div>
+        <a th:if="${currentPage < totalPages}" th:href="@{/theglobalnewsarchive/search(query=${query}, language=${language}, startDateTime=${startDateTime}, endDateTime=${endDateTime}, page=${currentPage + 1})}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors">Next</a>
+    </div>
+    <a href="/" class="block text-center text-green-600 hover:text-green-800 text-sm font-semiboldmt-4">Go back to home</a>
+</div>
+</body>
+</html>
