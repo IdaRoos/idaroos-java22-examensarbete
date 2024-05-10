@@ -3,32 +3,22 @@ package com.idaroos.theglobalnewsarchive.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Article {
-
-    @JsonProperty("author")
-    private String author;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
     private String description;
-
     @JsonProperty("url")
     private String articleUrl;
-
     @JsonProperty("urlToImage")
     private String imageUrl;
-
     @JsonProperty("publishedAt")
     private String publishedAt;
-
     @JsonProperty("source")
     private Source source;
-
-
     @JsonProperty("content")
     private String content;
 
-    public Article(String author, String title, String description, String articleUrl, String imageUrl, String publishedAt, Source source) {
-        this.author = author;
+    public Article(String title, String description, String articleUrl, String imageUrl, String publishedAt, Source source) {
         this.title = title;
         this.description = description;
         this.articleUrl = articleUrl;
@@ -40,13 +30,6 @@ public class Article {
     public Article() {
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     public String getTitle() {
         return title;

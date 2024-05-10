@@ -6,10 +6,10 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableCaching
-public class SvenskanyhetsarkivetApplication {
+public class TheglobalnewsarchiveApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SvenskanyhetsarkivetApplication.class, args);
+		SpringApplication.run(TheglobalnewsarchiveApplication.class, args);
 	}
 
 }

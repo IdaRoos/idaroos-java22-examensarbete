@@ -70,11 +70,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         let today = new Date();
-        let twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(today.getDate() - 14);
+        let oneMonthAgo = new Date();
+        oneMonthAgo.setDate(today.getDate() - 30);
 
         let dateStringToday = today.toISOString().split('T')[0];
-        let dateStringTwoWeeksAgo = twoWeeksAgo.toISOString().split('T')[0];
+        let dateStringTwoWeeksAgo = oneMonthAgo.toISOString().split('T')[0];
 
         document.getElementById('startDateTime').setAttribute('min', dateStringTwoWeeksAgo);
         document.getElementById('startDateTime').setAttribute('max', dateStringToday);
